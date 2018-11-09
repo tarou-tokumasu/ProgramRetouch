@@ -42,7 +42,7 @@
 				<div class="col s6">
 					<h4>${item.name}</h4>
 					<h5>${item.price}円</h5>
-					<p>${item.name}</p>
+					<p>${item.detail}</p>
 				</div>
 			</div>
 		</div>
