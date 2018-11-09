@@ -1,4 +1,5 @@
 <%@	page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,10 +29,11 @@
 								</tr>
 							</thead>
 							<tbody>
+
 								<tr>
-									<td class="center">1234年56月78日90時12分</td>
-									<td class="center">サンプル</td>
-									<td class="center">123456789円</td>
+									<td class="center">${buy.formatDate}</td>
+									<td class="center">${buy.deliveryMethodName}</td>
+									<td class="center">${buy.totalPrice}円</td>
 								</tr>
 							</tbody>
 						</table>
@@ -48,26 +50,21 @@
 							<thead>
 								<tr>
 									<th class="center">商品名</th>
-									<th class="center" style="width: 20%">単価</th>
+									<th class="center" style="width: 20%">値段</th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach var="b" items="${buyList}">
 								<tr>
-									<td class="center">サンプル商品名1</td>
-									<td class="center">111111111円</td>
+									<td class="center">${b.name}</td>
+									<td class="center">${b.price}円</td>
 								</tr>
-								<tr>
-									<td class="center">サンプル商品名2</td>
-									<td class="center">222222222円</td>
+							</c:forEach>
+							    <tr>
+									<td class="center">${buy.deliveryMethodName}</td>
+									<td class="center">${buy.deliveryMethodPrice}円</td>
 								</tr>
-								<tr>
-									<td class="center">サンプル商品名3</td>
-									<td class="center">333333333円</td>
-								</tr>
-								<tr>
-									<td class="center">サンプル</td>
-									<td class="center">123456789円</td>
-								</tr>
+
 							</tbody>
 						</table>
 					</div>

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import base.DBManager;
 import beans.ItemDataBeans;
@@ -178,6 +179,55 @@ public class ItemDAO {
 				con.close();
 			}
 		}
+	}
+
+	public static List<ItemDataBeans> findBuyData(int buy_id) {
+		Connection con = null;
+		List<ItemDataBeans> buyDataList = new ArrayList<ItemDataBeans>();
+
+        try {
+            // データベースへ接続
+            con = DBManager.getConnection();
+
+
+
+            // SELECT文を準備
+            // TODO: 未実装：管理者以外を取得するようSQLを変更する
+            String sql ="SELECT   name, price\n" +
+            		"FROM t_buy \n" +
+            		"LEFT JOIN t_buy_detail ON t_buy.id = t_buy_detail.buy_id\n" +
+            		"LEFT JOIN m_item ON t_buy_detail.item_id = m_item.id\n" +
+            		"WHERE buy_id=?";
+
+            // SELECTを実行し、結果表を取得
+            PreparedStatement pStmt = con.prepareStatement(sql);
+            pStmt.setString(1,String.valueOf(buy_id));
+            ResultSet rs = pStmt.executeQuery();
+
+
+            // 結果表に格納されたレコードの内容を
+            // Userインスタンスに設定し、ArrayListインスタンスに追加
+            while (rs.next()) {
+            	ItemDataBeans b = new ItemDataBeans();
+            	b.setName(rs.getString("name"));
+            	b.setPrice(rs.getInt("price"));
+                buyDataList.add(b);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            // データベース切断
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }
+		return buyDataList;
 	}
 
 }
